@@ -17,34 +17,11 @@ screens.forEach((item, index) => {
   }
 });
 
-const main = document.querySelector(`main`);
-
-const createArrow = () => {
-  const nodeArrow = document.createElement(`div`);
-  nodeArrow.className = `arrows__wrap`;
-  nodeArrow.style = `position: absolute; top: 135px; left: 50%; margin-left: -56px;`;
-  main.insertAdjacentElement(`beforeend`, nodeArrow);
-
-  const nodeBtnLeft = document.createElement(`div`);
-  nodeBtnLeft.className = `arrows__btn`;
-  nodeBtnLeft.style = `background: none; border: 2px solid black; padding: 5px 20px;`;
-  nodeBtnLeft.innerHTML = `<-`;
-  nodeArrow.appendChild(nodeBtnLeft);
-
-  const nodeBtnRight = document.createElement(`div`);
-  nodeBtnRight.className = `arrows__btn`;
-  nodeBtnRight.style = `background: none; border: 2px solid black; padding: 5px 20px;`;
-  nodeBtnRight.innerHTML = `->`;
-  nodeArrow.appendChild(nodeBtnRight);
-
-  nodeBtnLeft.addEventListener(`click`, () => select(current + 1));
-  nodeBtnRight.addEventListener(`click`, () => select(current - 1));
-};
+const main = document.querySelector(`section.main`);
 
 const selectSlide = (element) => {
   main.innerHTML = ``;
   main.appendChild(element.cloneNode(true));
-  createArrow();
 };
 
 const select = (index) => {
@@ -66,3 +43,29 @@ document.addEventListener(`keydown`, (evt) => {
 });
 
 select(current);
+
+const mainApp = document.querySelector(`.app`);
+
+const createArrow = () => {
+  const nodeArrow = document.createElement(`div`);
+  nodeArrow.className = `arrows__wrap`;
+  nodeArrow.style = `position: absolute; top: 135px; left: 50%; margin-left: -56px;`;
+  mainApp.insertAdjacentElement(`beforeend`, nodeArrow);
+
+  const nodeBtnLeft = document.createElement(`div`);
+  nodeBtnLeft.className = `arrows__btn`;
+  nodeBtnLeft.style = `background: none; border: 2px solid black; padding: 5px 20px;`;
+  nodeBtnLeft.innerHTML = `<-`;
+  nodeArrow.appendChild(nodeBtnLeft);
+
+  const nodeBtnRight = document.createElement(`div`);
+  nodeBtnRight.className = `arrows__btn`;
+  nodeBtnRight.style = `background: none; border: 2px solid black; padding: 5px 20px;`;
+  nodeBtnRight.innerHTML = `->`;
+  nodeArrow.appendChild(nodeBtnRight);
+
+  nodeBtnLeft.addEventListener(`click`, () => select(current + 1));
+  nodeBtnRight.addEventListener(`click`, () => select(current - 1));
+};
+
+createArrow();
