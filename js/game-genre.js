@@ -89,20 +89,12 @@ agreeButton.disabled = true;
 
 const welcomeButton = element.querySelector(`.game__back`);
 
-const resetChecked = (input) => {
-  input.querySelectorAll(`input[type=checkbox]:checked`).forEach((button) => {
-    button.checked = false;
-  });
-};
-
 agreeButton.addEventListener(`click`, () => {
   selectSlide(gameArtist);
-  resetChecked(element);
 });
 
 welcomeButton.addEventListener(`click`, () => {
   selectSlide(welcome);
-  resetChecked(element);
 });
 
 Array.from(element.querySelectorAll(`input[type=checkbox]`)).forEach((button) => {
@@ -115,4 +107,13 @@ Array.from(element.querySelectorAll(`input[type=checkbox]`)).forEach((button) =>
   });
 });
 
-export default element;
+/* Сбрасываем выбранные значения*/
+
+export const resetChecked = () => {
+  agreeButton.disabled = true;
+  element.querySelectorAll(`input[type=checkbox]:checked`).forEach((button) => {
+    button.checked = false;
+  });
+};
+
+export {element as gameGenre};

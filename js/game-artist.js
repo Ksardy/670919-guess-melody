@@ -1,5 +1,7 @@
 import {selectSlide, wrapperSlide, getRandom} from './utils.js';
 
+import {resetChecked} from './game-genre.js';
+
 import resultSuccess from './result-success.js';
 
 import welcome from './welcome.js';
@@ -75,6 +77,9 @@ element.querySelectorAll(`.artist__name`).forEach((button) => {
 
 const welcomeButton = element.querySelector(`.game__logo`);
 
-welcomeButton.addEventListener(`click`, () => selectSlide(welcome));
+welcomeButton.addEventListener(`click`, () => {
+  resetChecked();
+  selectSlide(welcome);
+});
 
 export default element;

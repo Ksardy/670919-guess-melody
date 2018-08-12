@@ -1,6 +1,6 @@
 import {selectSlide, wrapperSlide} from './utils.js';
 
-import gameGenre from './game-genre.js';
+import {gameGenre} from './game-genre.js';
 
 const template = `  
 <section class="welcome">

@@ -1,5 +1,7 @@
 import {selectSlide, wrapperSlide} from './utils.js';
 
+import {resetChecked} from './game-genre.js';
+
 import welcome from './welcome.js';
 
 const template = `section class="result">
@@ -17,7 +19,10 @@ let buttons = [];
 buttons.push(element.querySelector(`.result__logo`), (element.querySelector(`.result__replay`)));
 
 buttons.forEach((button) => {
-  button.addEventListener(`click`, () => selectSlide(welcome));
+  button.addEventListener(`click`, () => {
+    resetChecked();
+    selectSlide(welcome);
+  });
 });
 
 export default element;
