@@ -1,6 +1,7 @@
-import {selectSlide, render} from './utils.js';
+import {wrapperSlide, selectSlide} from './utils.js';
 
 import gameArtist from './game-artist.js';
+
 import welcome from './welcome.js';
 
 const template = `<section class="game game--genre">
@@ -80,16 +81,38 @@ const template = `<section class="game game--genre">
 </section>
 </section>`;
 
-const element = render(template);
+const element = wrapperSlide(template);
 
 const agreeButton = element.querySelector(`.game__submit`);
 
-agreeButton.disabled = `disabled`;
+agreeButton.disabled = true;
 
 const welcomeButton = element.querySelector(`.game__back`);
 
-agreeButton.addEventListener(`click`, () => selectSlide(gameArtist));
+const resetChecked = (input) => {
+  input.querySelectorAll(`input[type=checkbox]:checked`).forEach((button) => {
+    button.checked = false;
+  });
+};
 
-welcomeButton.addEventListener(`click`, () => selectSlide(welcome));
+agreeButton.addEventListener(`click`, () => {
+  selectSlide(gameArtist);
+  resetChecked(element);
+});
+
+welcomeButton.addEventListener(`click`, () => {
+  selectSlide(welcome);
+  resetChecked(element);
+});
+
+Array.from(element.querySelectorAll(`input[type=checkbox]`)).forEach((button) => {
+  button.addEventListener(`change`, () => {
+    if (element.querySelectorAll(`input[type=checkbox]:checked`).length > 0) {
+      agreeButton.disabled = false;
+    } else {
+      agreeButton.disabled = true;
+    }
+  });
+});
 
 export default element;

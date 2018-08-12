@@ -1,4 +1,4 @@
-import {selectSlide, render} from './utils.js';
+import {selectSlide, wrapperSlide} from './utils.js';
 
 import gameGenre from './game-genre.js';
 
@@ -15,7 +15,7 @@ const template = `
 <p class="welcome__text">Удачи!</p>
 </section>`;
 
-const element = render(template);
+const element = wrapperSlide(template);
 
 const agreeButton = element.querySelector(`.welcome__button`);
 

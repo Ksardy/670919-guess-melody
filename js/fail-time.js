@@ -1,4 +1,4 @@
-import {selectSlide, render} from './utils.js';
+import {selectSlide, wrapperSlide} from './utils.js';
 
 import welcome from './welcome.js';
 
@@ -9,10 +9,14 @@ const template = `  <section class="result">
 <button class="result__replay" type="button">Попробовать ещё раз</button>
 </section>`;
 
-const element = render(template);
+const element = wrapperSlide(template);
 
-const welcomeButton = element.querySelector(`.result__logo`);
+let buttons = [];
 
-welcomeButton.addEventListener(`click`, () => selectSlide(welcome));
+buttons.push(element.querySelector(`.result__logo`), (element.querySelector(`.result__replay`)));
+
+buttons.forEach((button) => {
+  button.addEventListener(`click`, () => selectSlide(welcome));
+});
 
 export default element;

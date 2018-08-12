@@ -1,7 +1,12 @@
-import {selectSlide, render} from './utils.js';
+import {selectSlide, wrapperSlide, getRandom} from './utils.js';
 
 import resultSuccess from './result-success.js';
+
 import welcome from './welcome.js';
+
+import failTries from './fail-tries.js';
+
+import failTime from './fail-time.js';
 
 const template = `<section class="game game--artist">
 <header class="game__header">
@@ -62,13 +67,13 @@ const template = `<section class="game game--artist">
 </section>
 </section>`;
 
-const element = render(template);
+const element = wrapperSlide(template);
 
-Array.from(element.querySelectorAll(`.artist__name`)).forEach((button) => {
-  button.addEventListener(`click`, () => selectSlide(resultSuccess));
+element.querySelectorAll(`.artist__name`).forEach((button) => {
+  button.addEventListener(`click`, () => selectSlide(getRandom([resultSuccess, failTries, failTime])));
 });
 
-const welcomeButton = element.querySelector(`.game__back`);
+const welcomeButton = element.querySelector(`.game__logo`);
 
 welcomeButton.addEventListener(`click`, () => selectSlide(welcome));
 
