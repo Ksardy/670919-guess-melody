@@ -29,8 +29,9 @@
     "gulp-rename": "1.4.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "2.6.4",
+    "postcss-reporter": "^6.0.0",
     "rollup-plugin-commonjs": "9.1.5",
-    "stylelint": "9.4.x",
+    "stylelint": "^9.4.0",
     "stylelint-config-htmlacademy": "0.1.x"
   },
   "engines": {
