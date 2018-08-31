@@ -1,15 +1,29 @@
 
 export const wrapperSlide = (template) => {
-  const wrapper = document.createElement(`section`);
+  const wrapper = document.createElement(`div`);
   wrapper.innerHTML = template.trim();
   return wrapper;
 };
 
 const main = document.querySelector(`section.main`);
 
-export const selectSlide = (element) => {
+export const selectSlide = (template) => {
   main.innerHTML = ``;
-  main.appendChild(element);
+  main.appendChild(template);
 };
 
-export const getRandom = (names) => names[Math.floor(Math.random() * names.length)];
+
+export const selectSlideGame = (data, element) => {
+  data.append(element);
+};
+
+export const createDivGame = () => {
+  const divGame = document.createElement(`div`);
+  divGame.className = `game`;
+  main.innerHTML = ``;
+  main.appendChild(divGame);
+};
+export const createSecunds = (state) => {
+  const arr = (state / 60).toFixed(2).split(`.`);
+  return arr[1];
+};

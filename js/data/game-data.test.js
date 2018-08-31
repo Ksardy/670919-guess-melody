@@ -1,6 +1,5 @@
-import {assert} from 'chai';
 
-import {createBalls} from '../game-balls.js';
+import createBalls from '../game-balls.js';
 
 import {changeLevel, INITIAL_GAME, changeLives, changeTime, createResultats} from '../game-data.js';
 
@@ -47,7 +46,7 @@ describe(`answersTest`, () => {
   });
 });
 
-const CreatePlayerResultate = function (ball, seconds, error) {
+const CreatePlayerResultate = (ball, seconds, error) => {
   return {balls: ball, time: seconds, hp: error};
 };
 
