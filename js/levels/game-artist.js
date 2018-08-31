@@ -3,7 +3,7 @@ const createArtistTemplate = (state) => `<section class="game__screen">
   <h2 class="game__title">${state.quest}</h2>
   <div class="game__track">
     <button class="track__button track__button--play" type="button"></button>
-    <audio scr=${state.track}></audio>
+    <audio scr='https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7'></audio>
   </div>
 
   <form class="game__artist">
