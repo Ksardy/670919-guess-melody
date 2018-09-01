@@ -65,6 +65,7 @@ const liveUpdateGenre = (element, game, data) => {
     /* если хотябы 1 ответ не верен, отнимаю жизнь и выхожу из функции, записываю ответ в массив ответов */
     if (it.value !== packData[0].trueAnswer) {
       game.lives -= 1;
+      game.time -= 30;
       game.answers.push({answer: `false`, time: 30});
       updateTopTemplate(game, data);
       return;
@@ -165,9 +166,12 @@ const updateCreateArtistTemplate = (game, data) => {
     button.addEventListener(`click`, () => {
       if (button.value !== packData[0].trueAnswer) {
         game.lives -= 1;
+        game.time -= 30;
         game.answers.push({answer: `false`, time: 30});
         updateTopTemplate(game, data);
       } else {
+        game.time -= 30;
+        updateTopTemplate(game, data);
         game.answers.push({answer: `true`, time: 30});
       }
       if (game.lives === 0) {
