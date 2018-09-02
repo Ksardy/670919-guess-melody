@@ -1,25 +1,14 @@
 import {INITIAL_GAME, playersBalls} from './game-data.js';
-
 import {selectSlide, wrapperSlide, createDivGame} from './utils.js';
-
 import createArtistTemplate from './levels/game-artist.js';
-
 import createGenreTemplate from './levels/game-genre.js';
-
 import pack from './data.js';
-
 import topTemplate from './levels/game-top.js';
-
 import createSuccesResultats from './levels/result-success.js';
-
 import templateFailResultat from './levels/fail.js';
-
 import createResultats from './game-resultats.js';
-
 import createBalls from './game-balls.js';
-
 import templateWelcome from './levels/welcome.js';
-
 import welcomeScreens from './welcome-data.js';
 
 const start = () => {
@@ -76,7 +65,7 @@ const liveUpdateGenre = (element, game, data) => {
 
 /* для проигрывания музыки в жанре*/
 
-const audioManioulated = (music) => {
+const audioManipulated = (music) => {
   const buttons = Array.from(music.querySelectorAll(`.track__button`));
   const tracks = Array.from(music.querySelectorAll(`audio`));
   buttons.forEach((element, i) => {
@@ -110,7 +99,7 @@ const updateCreateGenreTemplate = (game, data) => {
   data.className = `game game--genre`;
   const element = wrapperSlide(createGenreTemplate(packData[0]));
   const tracks = Array.from(element.querySelectorAll(`audio`));
-  audioManioulated(element);
+  audioManipulated(element);
   const agreeButton = element.querySelector(`.game__submit`);
   agreeButton.disabled = true;
   /* проверю на активность батонов*/
@@ -140,11 +129,11 @@ const updateCreateGenreTemplate = (game, data) => {
     data.removeChild(element);
     /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
     return data.append(updateCreateArtistTemplate(game, data));
+
   });
 
   return element;
 };
-
 
 /* Создает второй экран, подвешивается создание первого на обработчик */
 
