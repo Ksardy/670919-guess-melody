@@ -1,10 +1,27 @@
+import AbstractView from "./abstract-view";
 
-const createSuccesResultats = (state) => `<section class="result">
-<div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
-<h2 class="result__title">${state.title}</h2>
-<p class="result__total">${state.total}</p>
-<p class="result__text">${state.text}</p>
-<button class="result__replay" type="button">Сыграть ещё раз</button>
-</section>`;
+export default class WinResultat extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
 
-export default createSuccesResultats;
+  get template() {
+    return `<section class="result">
+    <div class="result__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"></div>
+    <h2 class="result__title">${this.state.title}</h2>
+    <p class="result__total">${this.state.total}</p>
+    <p class="result__text">${this.state.text}</p>
+    <button class="result__replay" type="button">Сыграть ещё раз</button>
+    </section>`;
+  }
+
+  reStart() {}
+
+  bind() {
+    const button = this.element.querySelector(`.result__replay`);
+    button.addEventListener(`click`, () => {
+      this.reStart();
+    });
+  }
+}

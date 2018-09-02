@@ -29,12 +29,12 @@ const main = document.querySelector(`section.main`);
 
 export const selectSlide = (template) => {
   main.innerHTML = ``;
-  main.appendChild(template);
+  return main.appendChild(template);
 };
 
 
 export const selectSlideGame = (data, element) => {
-  data.append(element);
+  return data.append(element);
 };
 
 export const createDivGame = () => {
@@ -42,7 +42,10 @@ export const createDivGame = () => {
   divGame.className = `game`;
   main.innerHTML = ``;
   main.appendChild(divGame);
+  const div = document.querySelector(`.game`);
+  return div;
 };
+
 export const createSecunds = (state) => {
   const arr = (state / 60).toFixed(2).split(`.`);
   return arr[1];

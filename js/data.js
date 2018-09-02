@@ -1,4 +1,3 @@
-import music from './music-data.js';
 
 import {rand, shuffle} from './utils.js';
 
@@ -88,9 +87,8 @@ const generateTracks = (arr) => {
   return srcMap;
 };
 
-const pack = [];
-
-const packaging = (arr, data) => {
+const createPack = (data) => {
+  const arr = [];
   let numb = NUMB_QUESTS;
   while (numb--) {
     if (numb % 2 === 0) {
@@ -102,8 +100,4 @@ const packaging = (arr, data) => {
   return arr;
 };
 
-/* создаю один чередующий вопросы массив, который буду шифтить*/
-
-packaging(pack, music);
-
-export default pack;
+export default createPack;
