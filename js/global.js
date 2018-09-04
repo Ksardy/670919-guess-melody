@@ -1,1 +1,3 @@
-import './main.js';
+import initiateSite from './init-game.js';
+
+initiateSite();

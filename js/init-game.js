@@ -1,27 +1,15 @@
 import {INITIAL_GAME, playersBalls} from './game-data.js';
-
 import {selectSlide, wrapperSlide, createDivGame} from './utils.js';
-
 import createArtistTemplate from './levels/game-artist.js';
-
 import GameGenre from './levels/game-genre.js';
-
 import createPack from './data.js';
-
 import Header from './levels/game-top.js';
-
 import WinResultat from './levels/result-success.js';
-
 import FailResultat from './levels/fail.js';
-
 import createResultats from './game-resultats.js';
-
 import createBalls from './game-balls.js';
-
 import Welcome from './levels/welcome.js';
-
 import welcomeScreens from './welcome-data.js';
-
 import musicData from './music-data.js';
 
 let packData = [];
@@ -77,12 +65,10 @@ const audioGenreManipulated = (music) => {
 
 const updateCreateGenreTemplate = (game, data) => {
   data.className = `game game--genre`;
-  const element = GameGenre(packData[0]);
-  const tracks = Array.from(element.querySelectorAll(`audio`));
-  audioGenreManipulated(element);
+  const genre = new GameGenre(packData[0]);
 
-  element.nextLevel(), () => {
-    const buttons = Array.from(element.querySelectorAll(`input[type=checkbox]:checked`));
+  genre.nextLevel = (buttons) => {
+    console.log(buttons);
     checkedAnswersGenre(game, buttons);
     updateTopTemplate(game, data);
     if (game.lives === 0) {
@@ -94,16 +80,13 @@ const updateCreateGenreTemplate = (game, data) => {
       game.balls = createBalls(game);
       return resultatsWinn(playersBalls, game);
     }
-    tracks.forEach((music) => {
-      music.pause();
-    });
     /* удалаю элемент */
-    data.removeChild(element);
+    data.removeChild(genre.element);
     /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
     return data.append(updateCreateArtistTemplate(game, data));
-  });
+  };
 
-  return element;
+  return genre.element;
 };
 
 

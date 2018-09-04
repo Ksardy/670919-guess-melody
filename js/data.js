@@ -21,8 +21,8 @@ const generateTrackGenre = (arr) => {
       return {
         trueAnswer: answer,
         quest: `Выберите ` + answer + ` треки`,
-        tracks: generateTracks(srcMap),
-        answers: generateTrackAnswersGenre(srcMap),
+        tracks: srcMap.map((element) => element.src),
+        answers: srcMap.map((element) => element.genre),
       };
     }
   }
@@ -47,44 +47,12 @@ const generateAnswerMap = (arr) => {
       return {
         trueAnswer: answer.replace(/\s/g, ``),
         quest: `Кто исполняет эту песню?`,
-        answers: generateTrackAnswers(srcMap),
-        images: generateTrackImg(srcMap),
+        answers: srcMap.map((element) => element.artist),
+        images: srcMap.map((element) => element.image),
         track: current.src};
     }
   }
   return null;
-};
-
-const generateTrackAnswers = (arr) => {
-  const srcMap = [];
-  arr.forEach((element) => {
-    srcMap.push(element.artist);
-  });
-  return srcMap;
-};
-
-const generateTrackAnswersGenre = (arr) => {
-  const srcMap = [];
-  arr.forEach((element) => {
-    srcMap.push(element.genre);
-  });
-  return srcMap;
-};
-
-const generateTrackImg = (arr) => {
-  const srcMap = [];
-  arr.forEach((element) => {
-    srcMap.push(element.image);
-  });
-  return srcMap;
-};
-
-const generateTracks = (arr) => {
-  const srcMap = [];
-  arr.forEach((element) => {
-    srcMap.push(element.src);
-  });
-  return srcMap;
 };
 
 const createPack = (data) => {

@@ -17,7 +17,7 @@ export default class GameGenre extends AbstractView {
         <audio src=${this.state.tracks[0]}></audio>
         </div>
         <div class="game__answer">
-          <input class="game__input visually-hidden" type="checkbox" name="answer" value=${state.answers[0]} id="answer-1">
+          <input class="game__input visually-hidden" type="checkbox" name="answer" value=${this.state.answers[0]} id="answer-1">
           <label class="game__check" for="answer-1">Отметить</label>
         </div>
       </div>
@@ -64,6 +64,8 @@ export default class GameGenre extends AbstractView {
 
   bind() {
     const agreeButton = this.element.querySelector(`.game__submit`);
+    const buttons = Array.from(this.element.querySelectorAll(`.track__button`));
+    const tracks = Array.from(this.element.querySelectorAll(`audio`));
     agreeButton.disabled = true;
     Array.from(this.element.querySelectorAll(`input[type=checkbox]`)).forEach((button) => {
       button.addEventListener(`change`, () => {
@@ -75,12 +77,11 @@ export default class GameGenre extends AbstractView {
       });
     });
 
-    agreeButton.addEventListener(`click`, () => this.nextLevel());
-  }
+    agreeButton.addEventListener(`click`, () => {
+      const checkButtons = this.element.querySelectorAll(`input[type=checkbox]:checked`);
+      this.nextLevel(checkButtons);
+    });
 
-  bindTrack() {
-    const buttons = Array.from(this.element.querySelectorAll(`.track__button`));
-    const tracks = Array.from(this.element.querySelectorAll(`audio`));
     buttons.forEach((element, i) => {
       if (element.className === `track__button track__button--pause`) {
         tracks[i].play();
@@ -89,7 +90,7 @@ export default class GameGenre extends AbstractView {
     buttons.forEach((element, index) => {
       element.addEventListener(`click`, () => {
         if (element.className === `track__button track__button--play`) {
-          let checkAudio = music.querySelector(`.track__button--pause`);
+          let checkAudio = this.element.querySelector(`.track__button--pause`);
           if (checkAudio) {
             buttons.forEach((data, i) => {
               data.className = `track__button track__button--play`;
@@ -105,6 +106,4 @@ export default class GameGenre extends AbstractView {
       });
     });
   }
-
-    
 }
