@@ -1,6 +1,6 @@
 import {INITIAL_GAME, playersBalls} from './game-data.js';
-import {selectSlide, wrapperSlide, createDivGame} from './utils.js';
-import createArtistTemplate from './levels/game-artist.js';
+import {selectSlide, createDivGame} from './utils.js';
+import GameArtist from './levels/game-artist.js';
 import GameGenre from './levels/game-genre.js';
 import createPack from './data.js';
 import Header from './levels/game-top.js';
@@ -33,32 +33,20 @@ const checkedAnswersGenre = (game, data)=> {
 
 /* для проигрывания музыки в жанре*/
 
-const audioGenreManipulated = (music) => {
-  const buttons = Array.from(music.querySelectorAll(`.track__button`));
-  const tracks = Array.from(music.querySelectorAll(`audio`));
-  buttons.forEach((element, i) => {
-    if (element.className === `track__button track__button--pause`) {
-      tracks[i].play();
+const audioManipulated = (evt, buttons, tracks, current) => {
+  if (evt.target.className === `track__button track__button--play`) {
+    if (current !== evt.target.dataset.button) {
+      buttons[current].className = `track__button track__button--play`;
+      tracks[current].pause();
     }
-  });
-  buttons.forEach((element, index) => {
-    element.addEventListener(`click`, () => {
-      if (element.className === `track__button track__button--play`) {
-        let checkAudio = music.querySelector(`.track__button--pause`);
-        if (checkAudio) {
-          buttons.forEach((data, i) => {
-            data.className = `track__button track__button--play`;
-            tracks[i].pause();
-          });
-        }
-        element.className = `track__button track__button--pause`;
-        return tracks[index].play();
-      } else {
-        element.className = `track__button track__button--play`;
-        return tracks[index].pause();
-      }
-    });
-  });
+    evt.target.className = `track__button track__button--pause`;
+    tracks[evt.target.dataset.button].play();
+    current = evt.target.dataset.button;
+  } else {
+    evt.target.className = `track__button track__button--play`;
+    tracks[evt.target.dataset.button].pause();
+    current = evt.target.dataset.button;
+  }
 };
 
 /* Создает первый экран, подвешивается создание второго на обработчик, подвешиваю проверку ответов на клик, в data идит созданынй функцией игры див, который оборачивает  и хедер и игру*/
@@ -67,8 +55,11 @@ const updateCreateGenreTemplate = (game, data) => {
   data.className = `game game--genre`;
   const genre = new GameGenre(packData[0]);
 
+  genre.checkedMusic = (evt, buttons, tracks, current) => {
+    audioManipulated(evt, buttons, tracks, current);
+  };
+
   genre.nextLevel = (buttons) => {
-    console.log(buttons);
     checkedAnswersGenre(game, buttons);
     updateTopTemplate(game, data);
     if (game.lives === 0) {
@@ -94,45 +85,42 @@ const updateCreateGenreTemplate = (game, data) => {
 
 const updateCreateArtistTemplate = (game, data) => {
   data.className = `game game--artist`;
-  const element = wrapperSlide(createArtistTemplate(packData[0]));
-  const track = element.querySelector(`audio`);
-  const buttonTrack = element.querySelector(`.track__button`);
-  buttonTrack.addEventListener(`click`, () => {
-    if (buttonTrack.className === `track__button track__button--play`) {
-      buttonTrack.className = `track__button track__button--pause`;
-      return track.play();
-    } else {
-      buttonTrack.className = `track__button track__button--play`;
-      return track.pause();
-    }
-  });
-  element.querySelectorAll(`.artist__input`).forEach((button) => {
-    button.addEventListener(`click`, () => {
-      if (button.value !== packData[0].trueAnswer) {
-        game.lives -= 1;
-        game.time -= 30;
-        game.answers.push({answer: `false`, time: 30});
-        updateTopTemplate(game, data);
-      } else {
-        game.time -= 30;
-        game.answers.push({answer: `true`, time: 30});
-        updateTopTemplate(game, data);
-      }
-      if (game.lives === 0) {
-        resultatsFail(playersBalls, game);
-        return resultatsFail(playersBalls, game);
-      }
-      packData.shift();
-      if (packData.length === 0) {
-        game.balls = createBalls(game);
-        return resultatsWinn(playersBalls, game);
-      }
+  const artist = new GameArtist(packData[0]);
+
+  artist.checkedMusic = (evt, track) => {
+    if (evt.target.className === `track__button track__button--pause`) {
+      evt.target.className = `track__button track__button--play`;
       track.pause();
-      data.removeChild(element);
-      return data.append(updateCreateGenreTemplate(game, data));
-    });
-  });
-  return element;
+    } else {
+      evt.target.className = `track__button track__button--pause`;
+      track.pause();
+    }
+  };
+
+  artist.nextLevel = (button) => {
+    if (button.value !== packData[0].trueAnswer) {
+      game.lives -= 1;
+      game.time -= 30;
+      game.answers.push({answer: `false`, time: 30});
+      updateTopTemplate(game, data);
+    } else {
+      game.time -= 30;
+      game.answers.push({answer: `true`, time: 30});
+      updateTopTemplate(game, data);
+    }
+    if (game.lives === 0) {
+      resultatsFail(playersBalls, game);
+      return resultatsFail(playersBalls, game);
+    }
+    packData.shift();
+    if (packData.length === 0) {
+      game.balls = createBalls(game);
+      return resultatsWinn(playersBalls, game);
+    }
+    data.removeChild(artist.element);
+    return data.append(updateCreateGenreTemplate(game, data));
+  };
+  return artist.element;
 };
 
 /* обновляю верхний экран, удаляю первый див под него при обновлении */
