@@ -80,7 +80,6 @@ const updateCreateGenreTemplate = (game, data) => {
   return genre.element;
 };
 
-
 /* Создает второй экран, подвешивается создание первого на обработчик */
 
 const updateCreateArtistTemplate = (game, data) => {
