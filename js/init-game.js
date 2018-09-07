@@ -16,18 +16,19 @@ let packData = [];
 
 let packs = [];
 
-const checkedAnswersGenre = (game, data)=> {
+const ONE_SECOND = 1000;
+
+const checkedAnswersGenre = (game, data, time)=> {
+  let currentTime = time - game.time;
   for (const it of data) {
     /* если хотябы 1 ответ не верен, отнимаю жизнь и выхожу из цикла, записываю ответ в массив ответов */
     if (it.value !== packData[0].trueAnswer) {
       game.lives -= 1;
-      game.time -= 30;
-      game.answers.push({answer: `false`, time: 30});
+      game.answers.push({answer: `false`, time: currentTime});
       return;
     }
   }
-  game.time -= 30;
-  game.answers.push({answer: `true`, time: 30});
+  game.answers.push({answer: `true`, time: currentTime});
   return;
 };
 
@@ -53,6 +54,7 @@ const audioManipulated = (evt, buttons, tracks, current) => {
 
 const updateCreateGenreTemplate = (game, data) => {
   data.className = `game game--genre`;
+  let startTime = game.time;
   const genre = new GameGenre(packData[0]);
 
   genre.checkedMusic = (evt, buttons, tracks, current) => {
@@ -60,7 +62,7 @@ const updateCreateGenreTemplate = (game, data) => {
   };
 
   genre.nextLevel = (buttons) => {
-    checkedAnswersGenre(game, buttons);
+    checkedAnswersGenre(game, buttons, startTime);
     updateTopTemplate(game, data);
     if (game.lives === 0) {
       resultatsFail(playersBalls, game);
@@ -84,8 +86,9 @@ const updateCreateGenreTemplate = (game, data) => {
 
 const updateCreateArtistTemplate = (game, data) => {
   data.className = `game game--artist`;
+  let startTime = game.time;
   const artist = new GameArtist(packData[0]);
-
+  
   artist.checkedMusic = (evt, track) => {
     if (evt.target.className === `track__button track__button--pause`) {
       evt.target.className = `track__button track__button--play`;
@@ -97,14 +100,13 @@ const updateCreateArtistTemplate = (game, data) => {
   };
 
   artist.nextLevel = (button) => {
+    let currentTime = startTime - game.time;
     if (button.value !== packData[0].trueAnswer) {
       game.lives -= 1;
-      game.time -= 30;
-      game.answers.push({answer: `false`, time: 30});
+      game.answers.push({answer: `false`, time: currentTime});
       updateTopTemplate(game, data);
     } else {
-      game.time -= 30;
-      game.answers.push({answer: `true`, time: 30});
+      game.answers.push({answer: `true`, time: currentTime});
       updateTopTemplate(game, data);
     }
     if (game.lives === 0) {
@@ -139,6 +141,7 @@ const updateTopTemplate = (object, data) => {
 /* если игрок закончил массив вопросов, то запускаю экран победы*/
 
 const resultatsWinn = (arr, game) => {
+   stopTimer();
   const resultat = new WinResultat(createResultats(arr, game));
   resultat.reStart = () => startGame();
   return selectSlide(resultat.element);
@@ -147,10 +150,29 @@ const resultatsWinn = (arr, game) => {
 /* если игрок 3 раза ошибся и жизни = 0, то запускаю экран поражения (через тотже обработчик результатов что и на победу)*/
 
 const resultatsFail = (arr, game) => {
+   stopTimer();
   const fail = new FailResultat(createResultats(arr, game));
   fail.reStart = () => startGame();
   return selectSlide(fail.element);
 };
+
+const tick = (game, divGame) => {
+    game.time -= 1;
+    updateTopTemplate(game, divGame);
+};
+
+let timer
+
+const startTimer = (game, divGame) => {
+  timer = setTimeout(() => {
+    tick(game, divGame);
+    startTimer(game, divGame);
+  }, ONE_SECOND);
+};
+
+const stopTimer = () => {
+  clearTimeout(timer);
+}
 
 const startGame = () => {
   packData = packs.slice(0);
@@ -158,6 +180,7 @@ const startGame = () => {
   game.answers = [];
   const divGame = createDivGame();
   updateTopTemplate(game, divGame);
+  startTimer (game, divGame);
   divGame.append(updateCreateGenreTemplate(game, divGame));
 };
 
