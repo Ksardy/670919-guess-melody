@@ -1,8 +1,4 @@
-const render = (html) => {
-  const wrapper = document.createElement(`div`);
-  wrapper.innerHTML = html.trim();
-  return wrapper;
-};
+import {wrapperSlide} from '../utils.js';
 
 export default class AbstractView {
   constructor() {
@@ -25,7 +21,7 @@ export default class AbstractView {
   }
 
   render() {
-    return render(this.template);
+    return wrapperSlide(this.template);
   }
 
   bind() {

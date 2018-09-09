@@ -2,6 +2,8 @@ const SVG_RADIUS = 2325;
 
 const MAX_TIME = 300;
 
+const TIME_LOW = 30;
+
 export const rand = (arr) => Math.floor(Math.random() * arr.length);
 
 export const shuffle = (arr) => {
@@ -47,8 +49,21 @@ export const createDivGame = () => {
 };
 
 export const createSecunds = (state) => {
-  const arr = (state / 60).toFixed(2).split(`.`);
-  return arr[1];
+  const arr = Math.floor(state % 60);
+  if (arr === 0) {
+    return `00`;
+  }
+  if (arr < 10) {
+    return `0` + arr;
+  }
+  return arr;
+};
+
+export const timeLow = (state) => {
+  if (state <= TIME_LOW && state % 2 === 0) {
+    return `style="color: red;"`;
+  }
+  return `style="color:"`;
 };
 
 export const createTimeDasharray = (state)=> {
