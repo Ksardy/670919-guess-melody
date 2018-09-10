@@ -13,4 +13,11 @@ export default class WelcomeApplication {
     this.welcome.game = () => Application.showGame();
     return selectSlide(this.welcome.element);
   }
+
+  loaded() {
+    this.welcome.loaded = (button) => {
+      button.disabled = false;
+      button.style = `cursor: default;`;
+    };
+  }
 }
