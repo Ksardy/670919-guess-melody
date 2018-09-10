@@ -1,0 +1,16 @@
+
+import {selectSlide} from './utils.js';
+import Application from './application.js';
+import Welcome from './levels/welcome.js';
+import welcomeScreens from './welcome-data.js';
+
+export default class WelcomeApplication {
+  constructor() {
+    this.welcome = new Welcome(welcomeScreens);
+  }
+
+  render() {
+    this.welcome.game = () => Application.showGame();
+    return selectSlide(this.welcome.element);
+  }
+}
