@@ -5,8 +5,6 @@ export const INITIAL_GAME = {
   time: 300
 };
 
-export const playersBalls = [2, 3, 8, 15, 7];
-
 export const changeLevel = (game, level) => {
   if (typeof level !== `number`) {
     throw new Error(`Level should be of type number`);

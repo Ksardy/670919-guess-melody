@@ -9,6 +9,8 @@ const ONE_SECOND = 1000;
 
 let timer;
 
+const NOT_WIN = 0;
+
 export default class StartGameApplication {
   constructor(model) {
     this.model = model;
@@ -29,7 +31,6 @@ export default class StartGameApplication {
 
   updateCreateGenreTemplate(game, data, music) {
     game.currentTime();
-    console.log(game._time);
     data.className = `game game--genre`;
     let startTime = game.time;
     const genre = new GameGenre(music[0]);
@@ -43,16 +44,15 @@ export default class StartGameApplication {
       this.updateTopTemplate(game.state, data);
       if (game.isLiveFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game.playersBalls, game);
+        return Application.showResultatsFail(game);
       }
+      data.removeChild(genre.element);
       game.nextAnswer();
       if (game.gameEnd()) {
         this.stopTimer();
-        game.gameBalls();
-        return Application.showResultatsWin(game.playersBalls, game);
+        return Application.showResultatsWin(game);
       }
       /* удалаю элемент */
-      data.removeChild(genre.element);
       /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
       return this.checkedTypeAnswers(game, data, music);
     };
@@ -62,7 +62,6 @@ export default class StartGameApplication {
 
   checkedTypeAnswers(game, data, music) {
     let questType = music[0].type;
-    console.log(questType);
     if (questType === `genre`) {
       return data.append(this.updateCreateGenreTemplate(game, data, music));
     } else {
@@ -82,6 +81,7 @@ export default class StartGameApplication {
       }
       evt.target.className = `track__button track__button--pause`;
       tracks[evt.target.dataset.button].play();
+      
     } else {
       evt.target.className = `track__button track__button--play`;
       tracks[evt.target.dataset.button].pause();
@@ -94,11 +94,11 @@ export default class StartGameApplication {
     const artist = new GameArtist(music[0]);
 
     artist.checkedMusic = (evt, track) => {
-      if (evt.target.className === `track__button track__button--pause`) {
-        evt.target.className = `track__button track__button--play`;
-        track.pause();
-      } else {
+      if (evt.target.className === `track__button track__button--play`) {
         evt.target.className = `track__button track__button--pause`;
+        track.play();
+      } else {
+        evt.target.className = `track__button track__button--play`;
         track.pause();
       }
     };
@@ -113,19 +113,18 @@ export default class StartGameApplication {
       }
       if (game.isTimeFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game.playersBalls, game);
+        return Application.showResultatsFail(game);
       }
       if (game.isLiveFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game.playersBalls, game);
+        return Application.showResultatsFail(game);
       }
+      data.removeChild(artist.element);
       game.nextAnswer();
       if (game.gameEnd()) {
         this.stopTimer();
-        game.gameBalls();
-        return Application.showResultatsWin(game.playersBalls, game);
+        return Application.showResultatsWin(game);
       }
-      data.removeChild(artist.element);
       return this.checkedTypeAnswers(game, data, music);
     };
     return artist.element;
@@ -139,7 +138,7 @@ export default class StartGameApplication {
     }
     const header = new Header(object);
     header.reGame = () => {
-      Application.showWelcome();
+      Application.start();
     };
     data.prepend(header.element);
   }
@@ -160,7 +159,7 @@ export default class StartGameApplication {
   timerCheck(game) {
     if (game.state.time === 0) {
       this.stopTimer();
-      return Application.showResultatsFail(game.playersBalls, game);
+      return Application.showResultatsFail(NOT_WIN, game);
     }
     return -1;
   }

@@ -1,11 +1,10 @@
-import {INITIAL_GAME, playersBalls} from './game-data.js';
+import {INITIAL_GAME} from './game-data.js';
 import createBalls from './game-balls.js';
 
 export default class QuestModel {
   constructor(data) {
     this._state = Object.assign({}, INITIAL_GAME);
     this._state.answers = [];
-    this._balls = playersBalls.slice(0);
     this._musicData = data;
     this._packData = this._musicData.slice(0);
   }
@@ -58,8 +57,8 @@ export default class QuestModel {
     return this._packData.length === 0;
   }
 
-  gameBalls() {
-    this._ball = createBalls(this._state);
+  get playerBalls() {
+    return this._ball;
   }
 
   answerUpdateTrue() {
@@ -71,11 +70,7 @@ export default class QuestModel {
     this._state.answers.push({answer: `false`, time: this._time - this._state.time});
   }
 
-  createBalls() {
-    this._balls.push(this._ball);
-  }
-
-  playerBall() {
-    this._state = this.createBalls(this._state);
+  createBall() {
+    this._ball = createBalls(this._state);
   }
 }
