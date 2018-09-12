@@ -1,11 +1,5 @@
 import AbstractView from "./abstract-view";
 
-const sound = (URLString) => {
-  const mySound = new Audio([URLString]);
-  mySound.play;
-  return mySound;
-};
-
 export default class GameArtist extends AbstractView {
   constructor(state) {
     super();
