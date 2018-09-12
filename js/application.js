@@ -6,27 +6,6 @@ import ErrorScreen from './levels/error.js';
 import {selectSlide} from './utils.js';
 import Loader from './loader.js';
 
-const blobs = () => {
-  console.log(questData);
-  for (const it of questData) {
-    if (it.type === `genre`) {
-      for (const element of it.answers) {
-        fetch(element.src)
-    .then((response) => response.blob())
-    .then((blob) => {
-      it.srcObject = blob;
-    });
-      }
-    } else {
-      fetch(it.src)
-    .then((response) => response.blob())
-    .then((blob) => {
-      it.srcObject = blob;
-    });
-    }
-  }console.log(questData);
-};
-
 let questData = [];
 
 class Application {
