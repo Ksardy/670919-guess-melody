@@ -1,5 +1,11 @@
 import AbstractView from "./abstract-view";
 
+const sound = (URLString) => {
+  const mySound = new Audio([URLString]);
+  mySound.play;
+  return mySound;
+};
+
 export default class GameArtist extends AbstractView {
   constructor(state) {
     super();
@@ -11,7 +17,7 @@ export default class GameArtist extends AbstractView {
     <h2 class="game__title">${this.state.question}</h2>
     <div class="game__track">
       <button class="track__button track__button--pause data-button="0" type="button"></button>
-      <audio autoplay preload="auto" scr="${this.state.src}"></audio>
+      <audio autoplay src=${this.state.src}></audio>
     </div>
     
   
