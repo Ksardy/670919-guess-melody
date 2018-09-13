@@ -10,9 +10,10 @@ export default class GameArtist extends AbstractView {
     return `<section class="game__screen">
     <h2 class="game__title">${this.state.question}</h2>
     <div class="game__track">
-      <button class="track__button track__button--play data-button="0" type="button"></button>
-      <audio scr=${this.state.src}></audio>
+      <button class="track__button track__button--pause data-button="0" type="button"></button>
+      <audio autoplay src=${this.state.src}></audio>
     </div>
+    
   
     <form class="game__artist">
       <div class="artist">
@@ -49,7 +50,6 @@ export default class GameArtist extends AbstractView {
   bind() {
     const track = this.element.querySelector(`audio`);
     const buttonTrack = this.element.querySelector(`.track__button`);
-    track.play();
 
     buttonTrack.addEventListener(`click`, (evt) => {
       this.checkedMusic(evt, track);

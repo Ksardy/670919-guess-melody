@@ -4,27 +4,20 @@ import StartGame from './game-screen.js';
 import Resultat from './game-resultats.js';
 import ErrorScreen from './levels/error.js';
 import {selectSlide} from './utils.js';
+import Loader from './loader.js';
 
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
-
-let questData;
+let questDatas = [];
 
 class Application {
 
   static start() {
     Application.loadWelcome();
-    window.fetch(`https://es.dump.academy/guess-melody/questions`).
-      then(checkStatus).
-      then((response) => response.json()).
-      then((data) => questData = data).
-      then((questData) => console.log(questData)).
-      then((response) => Application.showWelcome()).
+    Loader.loadData().
+      then((data) => {
+        questDatas = data;
+        return questDatas;
+      }).
+      then(() => Application.showWelcome()).
       catch(Application.showError);
   }
 
@@ -40,19 +33,23 @@ class Application {
   }
 
   static showGame() {
-    const data = new QuestModel(questData);
+    const data = new QuestModel(questDatas);
     const gameScreen = new StartGame(data);
     gameScreen.startGame();
   }
 
-  static showResultatsFail(arr, game) {
-    const resultat = new Resultat(arr, game);
+  static showResultatsFail(game) {
+    const playBalls = 0;
+    const resultat = new Resultat(playBalls, game);
     resultat.resultatsFail();
   }
 
-  static showResultatsWin(arr, game) {
-    const resultat = new Resultat(arr, game);
-    resultat.resultatsWin();
+  static showResultatsWin(game) {
+    game.createBall();
+    Loader.saveResults(game).
+      then(() => Loader.loadResults()).
+      then((data) => new Resultat(data, game).resultatsWin()).
+      catch(Application.showError);
   }
 
   static showError(error) {

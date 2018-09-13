@@ -14,7 +14,7 @@ export default class GameGenre extends AbstractView {
       <div class="track">
         <button class="track__button track__button--pause" type="button" data-button="0"></button>
         <div class="track__status">
-        <audio src=${this.state.answers[0].src}></audio>
+        <audio autoplay src=${this.state.answers[0].src}></audio>
         </div>
         <div class="game__answer">
           <input class="game__input visually-hidden" type="checkbox" name="answer" value=${this.state.answers[0].genre} id="answer-1">
@@ -68,7 +68,6 @@ export default class GameGenre extends AbstractView {
     const agreeButton = this.element.querySelector(`.game__submit`);
     const buttons = Array.from(this.element.querySelectorAll(`.track__button`));
     const tracks = Array.from(this.element.querySelectorAll(`audio`));
-    tracks[0].play();
 
     agreeButton.disabled = true;
 
