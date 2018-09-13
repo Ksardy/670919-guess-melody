@@ -9,7 +9,6 @@ export default class ResultatApplication {
     this.resultate = this.createResultats(arr, game);
   }
 
-
   resultatsFail() {
     const fail = new FailResultat(this.resultate);
     fail.reStart = () => {
@@ -28,7 +27,6 @@ export default class ResultatApplication {
 
   createResultats(data, object) {
     let player = object.state;
-    console.log(data);
     if (player.time === 0) {
       return {title: `Увы и ах!`,
         text: `Время вышло! Вы не успели отгадать все мелодии`,
@@ -39,8 +37,8 @@ export default class ResultatApplication {
         text: `У вас закончились все попытки. Ничего, повезёт в следующий раз!`,
       };
     } else {
-      const playerBall = object.playerBalls;
-      const arr = data.map((element) => element.playerBalls);
+      const playerBall = object.playerBall;
+      const arr = data.map((element) => element.playerBall);
       arr.sort((a, b) => b - a);
       let position = arr.indexOf(playerBall) + 1;
       let otherPlayer = arr.length - position;

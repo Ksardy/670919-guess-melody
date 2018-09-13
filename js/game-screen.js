@@ -4,12 +4,9 @@ import GameGenre from './levels/game-genre.js';
 import Application from './application.js';
 import Header from './levels/game-top.js';
 
-
 const ONE_SECOND = 1000;
 
 let timer;
-
-const NOT_WIN = 0;
 
 export default class StartGameApplication {
   constructor(model) {
@@ -81,7 +78,7 @@ export default class StartGameApplication {
       }
       evt.target.className = `track__button track__button--pause`;
       tracks[evt.target.dataset.button].play();
-      
+
     } else {
       evt.target.className = `track__button track__button--play`;
       tracks[evt.target.dataset.button].pause();
@@ -159,7 +156,7 @@ export default class StartGameApplication {
   timerCheck(game) {
     if (game.state.time === 0) {
       this.stopTimer();
-      return Application.showResultatsFail(NOT_WIN, game);
+      return Application.showResultatsFail(game);
     }
     return -1;
   }

@@ -1,5 +1,4 @@
-import {INITIAL_GAME} from './game-data.js';
-import createBalls from './game-balls.js';
+import {INITIAL_GAME} from './init-data.js';
 
 export default class QuestModel {
   constructor(data) {
@@ -45,6 +44,7 @@ export default class QuestModel {
       return -1;
     }
   }
+
   isTimeFail() {
     return this._state.time === 0;
   }
@@ -57,7 +57,7 @@ export default class QuestModel {
     return this._packData.length === 0;
   }
 
-  get playerBalls() {
+  get playerBall() {
     return this._ball;
   }
 
@@ -70,7 +70,25 @@ export default class QuestModel {
     this._state.answers.push({answer: `false`, time: this._time - this._state.time});
   }
 
+  initBalls(data) {
+    let currentBall = 0;
+    for (const it of data.answers) {
+      switch (true) {
+        case (it.answer === `true` && it.time > 30):
+          currentBall += 1;
+          break;
+        case (it.answer === `true` && it.time <= 30):
+          currentBall += 2;
+          break;
+        case (it.answer === `false`):
+          currentBall -= 2;
+          break;
+      }
+    }
+    return currentBall;
+  }
+
   createBall() {
-    this._ball = createBalls(this._state);
+    this._ball = this.initBalls(this._state);
   }
 }

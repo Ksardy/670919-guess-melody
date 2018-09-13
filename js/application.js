@@ -6,14 +6,17 @@ import ErrorScreen from './levels/error.js';
 import {selectSlide} from './utils.js';
 import Loader from './loader.js';
 
-let questData = [];
+let questDatas = [];
 
 class Application {
 
   static start() {
     Application.loadWelcome();
     Loader.loadData().
-      then((data) => questData = data).
+      then((data) => {
+        questDatas = data;
+        return questDatas;
+      }).
       then(() => Application.showWelcome()).
       catch(Application.showError);
   }
@@ -30,7 +33,7 @@ class Application {
   }
 
   static showGame() {
-    const data = new QuestModel(questData);
+    const data = new QuestModel(questDatas);
     const gameScreen = new StartGame(data);
     gameScreen.startGame();
   }
