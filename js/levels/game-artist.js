@@ -8,34 +8,34 @@ export default class GameArtist extends AbstractView {
 
   get template() {
     return `<section class="game__screen">
-    <h2 class="game__title">${this.state.quest}</h2>
+    <h2 class="game__title">${this.state.question}</h2>
     <div class="game__track">
       <button class="track__button track__button--play data-button="0" type="button"></button>
-      <audio scr='https://www.youtube.com/audiolibrary_download?vid=79100e44c826e2f7'></audio>
+      <audio scr=${this.state.src}></audio>
     </div>
   
     <form class="game__artist">
       <div class="artist">
-        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[0].replace(/\s/g, ``)} id="answer-1">
+        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[0].title.replace(/\s/g, ``)} id="answer-1">
         <label class="artist__name" for="answer-1">
-          <img class="artist__picture" src=${this.state.images[0]} alt="Пелагея">
-          ${this.state.answers[0]}
+          <img class="artist__picture" src=${this.state.answers[0].image.url} alt="Пелагея">
+          ${this.state.answers[0].title}
         </label>
       </div>
   
       <div class="artist">
-        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[1].replace(/\s/g, ``)} id="answer-2">
+        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[1].title.replace(/\s/g, ``)} id="answer-2">
         <label class="artist__name" for="answer-2">
-          <img class="artist__picture" src=${this.state.images[1]} alt="Пелагея">
-          ${this.state.answers[1]}
+          <img class="artist__picture" src=${this.state.answers[1].image.url} alt="Пелагея">
+          ${this.state.answers[1].title}
         </label>
       </div>
   
       <div class="artist">
-        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[2].replace(/\s/g, ``)} id="answer-3">
+        <input class="artist__input visually-hidden" type="radio" name="answer" value=${this.state.answers[2].title.replace(/\s/g, ``)} id="answer-3">
         <label class="artist__name" for="answer-3">
-          <img class="artist__picture" src=${this.state.images[2]} alt="Пелагея">
-          ${this.state.answers[2]}
+          <img class="artist__picture" src=${this.state.answers[2].image.url} alt="Пелагея">
+          ${this.state.answers[2].title}
         </label>
       </div>
     </form>

@@ -13,7 +13,7 @@ export default class ResultatApplication {
   resultatsFail() {
     const fail = new FailResultat(this.resultate);
     fail.reStart = () => {
-      Application.restartGame();
+      Application.showGame();
     };
     return selectSlide(fail.element);
   }
@@ -21,7 +21,7 @@ export default class ResultatApplication {
   resultatsWin() {
     const resultat = new WinResultat(this.resultate);
     resultat.reStart = () => {
-      Application.restartGame();
+      Application.showGame();
     };
     return selectSlide(resultat.element);
   }

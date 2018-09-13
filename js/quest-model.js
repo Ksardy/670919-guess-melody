@@ -1,27 +1,20 @@
 import {INITIAL_GAME, playersBalls} from './game-data.js';
-import createPack from './data.js';
 import createBalls from './game-balls.js';
-import musicData from './music-data.js';
-
-let pack = [];
 
 export default class QuestModel {
-  constructor() {
+  constructor(data) {
     this._state = Object.assign({}, INITIAL_GAME);
     this._state.answers = [];
     this._balls = playersBalls.slice(0);
+    this._musicData = data;
+    this._packData = this._musicData.slice(0);
   }
 
   get state() {
     return this._state;
   }
 
-  createPack() {
-    pack = createPack(musicData);
-  }
-
   get packData() {
-    this._packData = pack.slice(0);
     return this._packData;
   }
 
@@ -42,9 +35,17 @@ export default class QuestModel {
   }
 
   answerTrue() {
-    return this._packData[0].trueAnswer;
+    if (this._packData[0].type === `genre`) {
+      return this._packData[0].genre;
+    } else {
+      for (const it of this._packData[0].answers) {
+        if (it.isCorrect === true) {
+          return it.title.replace(/\s/g, ``);
+        }
+      }
+      return -1;
+    }
   }
-
   isTimeFail() {
     return this._state.time === 0;
   }

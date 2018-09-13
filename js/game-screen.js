@@ -54,27 +54,37 @@ export default class StartGameApplication {
       /* удалаю элемент */
       data.removeChild(genre.element);
       /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
-      return data.append(this.updateCreateArtistTemplate(game, data, music));
+      return this.checkedTypeAnswers(game, data, music);
     };
 
     return genre.element;
   }
 
+  checkedTypeAnswers(game, data, music) {
+    let questType = music[0].type;
+    console.log(questType);
+    if (questType === `genre`) {
+      return data.append(this.updateCreateGenreTemplate(game, data, music));
+    } else {
+      return data.append(this.updateCreateArtistTemplate(game, data, music));
+    }
+  }
+
   /* для проигрывания музыки в жанре*/
 
-  audioManipulated(evt, buttons, tracks, current) {
+  audioManipulated(evt, buttons, tracks) {
     if (evt.target.className === `track__button track__button--play`) {
-      if (current !== evt.target.dataset.button) {
-        buttons[current].className = `track__button track__button--play`;
-        tracks[current].pause();
+      for (const it of buttons) {
+        if (it.className === `track__button track__button--pause`) {
+          it.className = `track__button track__button--play`;
+          tracks[it.dataset.button].pause();
+        }
       }
       evt.target.className = `track__button track__button--pause`;
       tracks[evt.target.dataset.button].play();
-      current = evt.target.dataset.button;
     } else {
       evt.target.className = `track__button track__button--play`;
       tracks[evt.target.dataset.button].pause();
-      current = evt.target.dataset.button;
     }
   }
 
@@ -94,8 +104,6 @@ export default class StartGameApplication {
     };
 
     artist.nextLevel = (button) => {
-      console.log(game.answerTrue());
-      console.log(game.playersBalls);
       if (button.value !== game.answerTrue()) {
         game.answerUpdateFalse();
         this.updateTopTemplate(game.state, data);
@@ -118,7 +126,7 @@ export default class StartGameApplication {
         return Application.showResultatsWin(game.playersBalls, game);
       }
       data.removeChild(artist.element);
-      return data.append(this.updateCreateGenreTemplate(game, data, music));
+      return this.checkedTypeAnswers(game, data, music);
     };
     return artist.element;
   }
@@ -160,7 +168,7 @@ export default class StartGameApplication {
   startGame() {
     this.updateTopTemplate(this.model.state, this.divGame);
     this.startTimer(this.model, this.divGame);
-    this.divGame.append(this.updateCreateGenreTemplate(this.model, this.divGame, this.model.packData));
+    this.checkedTypeAnswers(this.model, this.divGame, this.model.packData);
   }
 }
 
