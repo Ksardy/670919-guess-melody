@@ -16,12 +16,12 @@ export default class WinResultat extends AbstractView {
     </section>`;
   }
 
-  reStart() {}
+  onReGame() {}
 
   bind() {
     const button = this.element.querySelector(`.result__replay`);
     button.addEventListener(`click`, () => {
-      this.reStart();
+      this.onReGame();
     });
   }
 }

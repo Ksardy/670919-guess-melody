@@ -1,4 +1,3 @@
-
 import {selectSlide} from './utils.js';
 import Application from './application.js';
 import Welcome from './levels/welcome.js';
@@ -10,7 +9,7 @@ export default class WelcomeApplication {
   }
 
   render() {
-    this.welcome.game = () => Application.showGame();
+    this.welcome.onGame = () => Application.showGame();
     return selectSlide(this.welcome.element);
   }
 

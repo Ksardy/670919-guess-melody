@@ -60,9 +60,9 @@ export default class GameGenre extends AbstractView {
   </section>`;
   }
 
-  nextLevel() {}
+  onNextLevel() {}
 
-  checkedMusic() {}
+  onCheckedMusic() {}
 
   bind() {
     const agreeButton = this.element.querySelector(`.game__submit`);
@@ -89,12 +89,12 @@ export default class GameGenre extends AbstractView {
         }
       }
       const checkButtons = this.element.querySelectorAll(`input[type=checkbox]:checked`);
-      this.nextLevel(checkButtons);
+      this.onNextLevel(checkButtons);
     });
 
     buttons.forEach((element) => {
       element.addEventListener(`click`, (evt) => {
-        this.checkedMusic(evt, buttons, tracks);
+        this.onCheckedMusic(evt, buttons, tracks);
       });
     });
   }
