@@ -15,10 +15,10 @@ export default class FailResultat extends AbstractView {
     </section>`;
   }
 
-  reStart() {}
+  onReGame() {}
 
   bind() {
     const button = this.element.querySelector(`.result__replay`);
-    button.addEventListener(`click`, () => this.reStart());
+    button.addEventListener(`click`, () => this.onReGame());
   }
 }

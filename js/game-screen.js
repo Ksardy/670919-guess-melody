@@ -26,17 +26,17 @@ export default class StartGameApplication {
     return;
   }
 
-  updateCreateGenreTemplate(game, data, music) {
+  updateCreateGenreTemplate(game, data, sounds) {
     game.currentTime();
     data.className = `game game--genre`;
     let startTime = game.time;
-    const genre = new GameGenre(music[0]);
+    const genre = new GameGenre(sounds[0]);
 
-    genre.checkedMusic = (evt, buttons, tracks, current) => {
+    genre.onCheckedMusic = (evt, buttons, tracks, current) => {
       this.audioManipulated(evt, buttons, tracks, current);
     };
 
-    genre.nextLevel = (buttons) => {
+    genre.onNextLevel = (buttons) => {
       this.checkedAnswersGenre(game, buttons, startTime);
       this.updateTopTemplate(game.state, data);
       if (game.isLiveFail()) {
@@ -51,18 +51,18 @@ export default class StartGameApplication {
       }
       /* удалаю элемент */
       /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
-      return this.checkedTypeAnswers(game, data, music);
+      return this.checkedTypeAnswers(game, data, sounds);
     };
 
     return genre.element;
   }
 
-  checkedTypeAnswers(game, data, music) {
-    let questType = music[0].type;
+  checkedTypeAnswers(game, data, sounds) {
+    let questType = sounds[0].type;
     if (questType === `genre`) {
-      return data.append(this.updateCreateGenreTemplate(game, data, music));
+      return data.append(this.updateCreateGenreTemplate(game, data, sounds));
     } else {
-      return data.append(this.updateCreateArtistTemplate(game, data, music));
+      return data.append(this.updateCreateArtistTemplate(game, data, sounds));
     }
   }
 
@@ -85,12 +85,12 @@ export default class StartGameApplication {
     }
   }
 
-  updateCreateArtistTemplate(game, data, music) {
+  updateCreateArtistTemplate(game, data, sounds) {
     game.currentTime();
     data.className = `game game--artist`;
-    const artist = new GameArtist(music[0]);
+    const artist = new GameArtist(sounds[0]);
 
-    artist.checkedMusic = (evt, track) => {
+    artist.onCheckedMusic = (evt, track) => {
       if (evt.target.className === `track__button track__button--play`) {
         evt.target.className = `track__button track__button--pause`;
         track.play();
@@ -100,7 +100,7 @@ export default class StartGameApplication {
       }
     };
 
-    artist.nextLevel = (button) => {
+    artist.onNextLevel = (button) => {
       if (button.value !== game.answerTrue()) {
         game.answerUpdateFalse();
         this.updateTopTemplate(game.state, data);
@@ -122,7 +122,7 @@ export default class StartGameApplication {
         this.stopTimer();
         return Application.showResultatsWin(game);
       }
-      return this.checkedTypeAnswers(game, data, music);
+      return this.checkedTypeAnswers(game, data, sounds);
     };
     return artist.element;
   }
@@ -134,7 +134,7 @@ export default class StartGameApplication {
       data.removeChild(data.querySelector(`:first-child`));
     }
     const header = new Header(object);
-    header.reGame = () => {
+    header.onReGame = () => {
       Application.start();
     };
     data.prepend(header.element);

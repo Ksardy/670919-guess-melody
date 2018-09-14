@@ -31,12 +31,12 @@ export default class Header extends AbstractView {
     </header>`;
   }
 
-  reGame() {}
+  onReGame() {}
 
   bind() {
     const welcomeButton = this.element.querySelector(`.game__back`);
     welcomeButton.addEventListener(`click`, () => {
-      this.reGame();
+      this.onReGame();
     });
   }
 }
