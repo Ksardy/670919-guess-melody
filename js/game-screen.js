@@ -122,7 +122,7 @@ export default class StartGameApplication {
         this.stopTimer();
         return Application.showResultsWin(game);
       }
-      return this(game, data, sounds);
+      return this.checkTypeAnswers(game, data, sounds);
     };
     return artist.element;
   }
@@ -164,7 +164,7 @@ export default class StartGameApplication {
   startGame() {
     this.updateTopTemplate(this.model.state, this.divGame);
     this.startTimer(this.model, this.divGame);
-    this(this.model, this.divGame, this.model.packData);
+    this.checkTypeAnswers(this.model, this.divGame, this.model.packData);
   }
 }
 

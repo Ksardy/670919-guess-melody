@@ -1,4 +1,4 @@
-import {wrapperSlide} from '../utils.js';
+import {takeSlide} from '../utils.js';
 
 export default class AbstractView {
   constructor() {
@@ -21,7 +21,7 @@ export default class AbstractView {
   }
 
   render() {
-    return wrapperSlide(this.template);
+    return takeSlide(this.template);
   }
 
   bind() {

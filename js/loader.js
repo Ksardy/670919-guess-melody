@@ -25,12 +25,12 @@ export default class Loader {
 
   static preLoadSounds(data) {
     let myInit = {method: `GET`,
-      mode: `cors`};
+      mode: `no-cors`};
 
     for (const it of data) {
       if (it.type === `artist`) {
         console.log(it);
-        fetch(new Request(it.src, myInit)).then(toJSON).then((response) => response.blob).then((blob) => {
+        fetch(new Request(it.src, myInit)).then((response) => response.blob()).then((blob) => {
           console.log(blob);
           it.src = blob;
           console.log(it.src);

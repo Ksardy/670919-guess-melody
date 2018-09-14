@@ -45,7 +45,7 @@ class Application {
   }
 
   static showResultsWin(game) {
-    game.createBall();
+    game.createPoints();
     Loader.saveResults(game).
       then(() => Loader.loadResults()).
       then((data) => new Results(data, game).resultsWin());
