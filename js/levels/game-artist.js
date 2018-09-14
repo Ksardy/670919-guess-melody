@@ -43,22 +43,22 @@ export default class GameArtist extends AbstractView {
   </section>`;
   }
 
-  onNextLevel() {}
+  onSelectNextLevel() {}
 
-  onCheckedMusic() {}
+  onCheckMusic() {}
 
   bind() {
     const track = this.element.querySelector(`audio`);
     const buttonTrack = this.element.querySelector(`.track__button`);
 
     buttonTrack.addEventListener(`click`, (evt) => {
-      this.checkedMusic(evt, track);
+      this.onCheckMusic(evt, track);
     });
 
     this.element.querySelectorAll(`.artist__input`).forEach((button) => {
       button.addEventListener(`click`, () => {
         track.pause();
-        this.onNextLevel(button);
+        this.onSelectNextLevel(button);
       });
     });
   }

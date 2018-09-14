@@ -1,7 +1,7 @@
 import Welcome from './welcome-screen.js';
 import QuestModel from './quest-model.js';
 import StartGame from './game-screen.js';
-import Resultat from './game-resultats.js';
+import Results from './game-results.js';
 import ErrorScreen from './levels/error.js';
 import {selectSlide} from './utils.js';
 import Loader from './loader.js';
@@ -16,7 +16,7 @@ class Application {
       then((data) => {
         questDatas = data;
         return questDatas;
-      }).
+      }).then(() => Loader.preLoadSounds(questDatas)).
       then(() => Application.showWelcome()).
       catch(Application.showError);
   }
@@ -38,18 +38,17 @@ class Application {
     gameScreen.startGame();
   }
 
-  static showResultatsFail(game) {
-    const playBalls = 0;
-    const resultat = new Resultat(playBalls, game);
-    resultat.resultatsFail();
+  static showResultsFail(game) {
+    const playerBall = 0;
+    const results = new Results(playerBall, game);
+    results.resultsFail();
   }
 
-  static showResultatsWin(game) {
+  static showResultsWin(game) {
     game.createBall();
     Loader.saveResults(game).
       then(() => Loader.loadResults()).
-      then((data) => new Resultat(data, game).resultatsWin()).
-      catch(Application.showError);
+      then((data) => new Results(data, game).resultsWin());
   }
 
   static showError(error) {

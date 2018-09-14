@@ -1,4 +1,4 @@
-import {createSecunds, createTimeDasharray, timeLow} from '../utils.js';
+import {deleteTime, createTimeDasharray, checkTimeLow} from '../utils.js';
 
 import AbstractView from "./abstract-view";
 
@@ -18,10 +18,10 @@ export default class Header extends AbstractView {
     <circle class="timer__line" cx="390" cy="390" r="370" ${createTimeDasharray(this.state.time)} style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center" />
     </svg>
       <div>      
-      <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml" ${timeLow(this.state.time)}>
+      <div class="timer__value" xmlns="http://www.w3.org/1999/xhtml" ${checkTimeLow(this.state.time)}>
         <span class="timer__mins">${`0` + Math.floor(this.state.time / 60)}</span>
         <span class="timer__dots">:</span>
-        <span class="timer__secs">${createSecunds(this.state.time)} </span>
+        <span class="timer__secs">${deleteTime(this.state.time)} </span>
       </div>
       <div class="game__mistakes">
       ${new Array(3 - this.state.lives)
@@ -31,12 +31,12 @@ export default class Header extends AbstractView {
     </header>`;
   }
 
-  onReGame() {}
+  onRestart() {}
 
   bind() {
     const welcomeButton = this.element.querySelector(`.game__back`);
     welcomeButton.addEventListener(`click`, () => {
-      this.onReGame();
+      this.onRestart();
     });
   }
 }

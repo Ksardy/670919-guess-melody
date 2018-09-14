@@ -9,10 +9,10 @@ const SVG_RADIUS = 2325;
 
 export const rand = (arr) => Math.floor(Math.random() * arr.length);
 
-export const wrapperSlide = (template) => {
-  const wrapper = document.createElement(`div`);
-  wrapper.innerHTML = template.trim();
-  return wrapper;
+export const takeSlide = (template) => {
+  const slide = document.createElement(`div`);
+  slide.innerHTML = template.trim();
+  return slide;
 };
 
 const main = document.querySelector(`section.main`);
@@ -31,7 +31,7 @@ export const createDivGame = () => {
   return div;
 };
 
-export const createSecunds = (state) => {
+export const deleteTime = (state) => {
   const arr = Math.floor(state % 60);
   if (arr === TIME.NULL_SECONDS) {
     return `00`;
@@ -42,7 +42,7 @@ export const createSecunds = (state) => {
   return arr;
 };
 
-export const timeLow = (state) => {
+export const checkTimeLow = (state) => {
   if (state <= TIME.TIME_LOW && state % 2 === 0) {
     return `style="color: red;"`;
   }

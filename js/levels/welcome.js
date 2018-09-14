@@ -1,4 +1,3 @@
-
 import AbstractView from "./abstract-view";
 
 export default class Welcome extends AbstractView {
@@ -21,7 +20,7 @@ export default class Welcome extends AbstractView {
     </section>`;
   }
 
-  onGame() {}
+  onStartGame() {}
 
   loaded() {}
 
@@ -30,7 +29,7 @@ export default class Welcome extends AbstractView {
     agreeButton.disabled = true;
     this.loaded(agreeButton);
 
-    agreeButton.addEventListener(`click`, () => this.onGame());
+    agreeButton.addEventListener(`click`, () => this.onStartGame());
   }
 
 }
