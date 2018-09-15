@@ -10,7 +10,6 @@ const checkStatus = (response) => {
   }
 };
 
-
 const toJSON = (res) => res.json();
 
 export default class Loader {
@@ -22,35 +21,6 @@ export default class Loader {
     return fetch(`${SERVER_URL}/stats/:${APP_ID}`).then(checkStatus).then(toJSON);
   }
 
-<<<<<<< HEAD
-
-  static preLoadSounds(data) {
-    let myInit = {method: `GET`,
-      mode: `no-cors`};
-
-    for (const it of data) {
-      if (it.type === `artist`) {
-        console.log(it);
-        fetch(new Request(it.src, myInit)).then((response) => response.blob()).then((blob) => {
-          console.log(blob);
-          it.src = blob;
-          console.log(it.src);
-          return it.src;
-        });
-      } else {
-        for (const element of it.answers) {
-          fetch(new Request(element.src, myInit)).then((response) => response.blob()).then((blob) => {
-            element.src = blob;
-            console.log(element.src);
-            return element.src;
-          });
-        }
-      }
-    }
-  }
-
-=======
->>>>>>> module7-task2
   static saveResults(data) {
     const element = {time: data.state.time,
       points: data.playerBall};
