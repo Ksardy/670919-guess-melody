@@ -22,6 +22,7 @@ export default class Loader {
     return fetch(`${SERVER_URL}/stats/:${APP_ID}`).then(checkStatus).then(toJSON);
   }
 
+<<<<<<< HEAD
 
   static preLoadSounds(data) {
     let myInit = {method: `GET`,
@@ -48,6 +49,8 @@ export default class Loader {
     }
   }
 
+=======
+>>>>>>> module7-task2
   static saveResults(data) {
     const element = {time: data.state.time,
       points: data.playerBall};
