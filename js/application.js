@@ -16,8 +16,7 @@ class Application {
       then((data) => {
         questDatas = data;
         return questDatas;
-      }).then(() => Loader.preLoadSounds(questDatas)).
-      then(() => Application.showWelcome()).
+      }).then(() => Application.showWelcome()).
       catch(Application.showError);
   }
 
