@@ -9,7 +9,7 @@ export default class WelcomeApplication {
   }
 
   render() {
-    this.welcome.onGame = () => Application.showGame();
+    this.welcome.onStartGame = () => Application.showGame();
     return selectSlide(this.welcome.element);
   }
 

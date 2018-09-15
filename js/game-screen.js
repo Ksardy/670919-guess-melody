@@ -14,10 +14,10 @@ export default class StartGameApplication {
     this.divGame = createDivGame();
   }
 
-  checkedAnswersGenre(game, data) {
+  checkAnswersGenre(game, data) {
     for (const it of data) {
       /* если хотябы 1 ответ не верен, отнимаю жизнь и выхожу из цикла, записываю ответ в массив ответов */
-      if (it.value !== game.answerTrue()) {
+      if (it.value !== game.takeAnswerTrue()) {
         game.answerUpdateFalse();
         return;
       }
@@ -27,37 +27,37 @@ export default class StartGameApplication {
   }
 
   updateCreateGenreTemplate(game, data, sounds) {
-    game.currentTime();
+    game.takeCurrentTime();
     data.className = `game game--genre`;
     let startTime = game.time;
     const genre = new GameGenre(sounds[0]);
 
-    genre.onCheckedMusic = (evt, buttons, tracks, current) => {
-      this.audioManipulated(evt, buttons, tracks, current);
+    genre.onCheckMusic = (evt, buttons, tracks, current) => {
+      this.audioSwitch(evt, buttons, tracks, current);
     };
 
-    genre.onNextLevel = (buttons) => {
-      this.checkedAnswersGenre(game, buttons, startTime);
+    genre.onSelectNextLevel = (buttons) => {
+      this.checkAnswersGenre(game, buttons, startTime);
       this.updateTopTemplate(game.state, data);
       if (game.isLiveFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game);
+        return Application.showResultsFail(game);
       }
       data.removeChild(genre.element);
       game.nextAnswer();
       if (game.gameEnd()) {
         this.stopTimer();
-        return Application.showResultatsWin(game);
+        return Application.showResultsWin(game);
       }
       /* удалаю элемент */
       /* запускаю второй экран, поставил функцию победы только на второй экран, так как только на нем может кончится длинна вопросов из 10 (в данных условиях) */
-      return this.checkedTypeAnswers(game, data, sounds);
+      return this.checkTypeAnswers(game, data, sounds);
     };
 
     return genre.element;
   }
 
-  checkedTypeAnswers(game, data, sounds) {
+  checkTypeAnswers(game, data, sounds) {
     let questType = sounds[0].type;
     if (questType === `genre`) {
       return data.append(this.updateCreateGenreTemplate(game, data, sounds));
@@ -68,7 +68,7 @@ export default class StartGameApplication {
 
   /* для проигрывания музыки в жанре*/
 
-  audioManipulated(evt, buttons, tracks) {
+  audioSwitch(evt, buttons, tracks) {
     if (evt.target.className === `track__button track__button--play`) {
       for (const it of buttons) {
         if (it.className === `track__button track__button--pause`) {
@@ -86,11 +86,11 @@ export default class StartGameApplication {
   }
 
   updateCreateArtistTemplate(game, data, sounds) {
-    game.currentTime();
+    game.takeCurrentTime();
     data.className = `game game--artist`;
     const artist = new GameArtist(sounds[0]);
 
-    artist.onCheckedMusic = (evt, track) => {
+    artist.onCheckMusic = (evt, track) => {
       if (evt.target.className === `track__button track__button--play`) {
         evt.target.className = `track__button track__button--pause`;
         track.play();
@@ -100,8 +100,8 @@ export default class StartGameApplication {
       }
     };
 
-    artist.onNextLevel = (button) => {
-      if (button.value !== game.answerTrue()) {
+    artist.onSelectNextLevel = (button) => {
+      if (button.value !== game.takeAnswerTrue()) {
         game.answerUpdateFalse();
         this.updateTopTemplate(game.state, data);
       } else {
@@ -110,19 +110,19 @@ export default class StartGameApplication {
       }
       if (game.isTimeFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game);
+        return Application.showResultsFail(game);
       }
       if (game.isLiveFail()) {
         this.stopTimer();
-        return Application.showResultatsFail(game);
+        return Application.showResultsFail(game);
       }
       data.removeChild(artist.element);
       game.nextAnswer();
       if (game.gameEnd()) {
         this.stopTimer();
-        return Application.showResultatsWin(game);
+        return Application.showResultsWin(game);
       }
-      return this.checkedTypeAnswers(game, data, sounds);
+      return this.checkTypeAnswers(game, data, sounds);
     };
     return artist.element;
   }
@@ -134,7 +134,7 @@ export default class StartGameApplication {
       data.removeChild(data.querySelector(`:first-child`));
     }
     const header = new Header(object);
-    header.onReGame = () => {
+    header.onRestart = () => {
       Application.start();
     };
     data.prepend(header.element);
@@ -156,7 +156,7 @@ export default class StartGameApplication {
   timerCheck(game) {
     if (game.state.time === 0) {
       this.stopTimer();
-      return Application.showResultatsFail(game);
+      return Application.showResultsFail(game);
     }
     return -1;
   }
@@ -164,7 +164,7 @@ export default class StartGameApplication {
   startGame() {
     this.updateTopTemplate(this.model.state, this.divGame);
     this.startTimer(this.model, this.divGame);
-    this.checkedTypeAnswers(this.model, this.divGame, this.model.packData);
+    this.checkTypeAnswers(this.model, this.divGame, this.model.packData);
   }
 }
 

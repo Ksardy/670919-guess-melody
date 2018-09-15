@@ -1,6 +1,7 @@
 const SERVER_URL = `https://es.dump.academy/guess-melody`;
 const APP_ID = 62101985;
 
+
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -22,7 +23,7 @@ export default class Loader {
 
   static saveResults(data) {
     const element = {time: data.state.time,
-      playerBalls: data.playerBalls};
+      points: data.playerBall};
     const requestSettings = {
       body: JSON.stringify(element),
       headers: {

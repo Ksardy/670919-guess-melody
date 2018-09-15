@@ -28,11 +28,11 @@ export default class QuestModel {
     return this._state.lives === 0;
   }
 
-  currentTime() {
+  takeCurrentTime() {
     this._time = this._state.time;
   }
 
-  answerTrue() {
+  takeAnswerTrue() {
     if (this._packData[0].type === `genre`) {
       return this._packData[0].genre;
     } else {
@@ -70,7 +70,7 @@ export default class QuestModel {
     this._state.answers.push({answer: `false`, time: this._time - this._state.time});
   }
 
-  initBalls(data) {
+  initPoints(data) {
     let currentBall = 0;
     for (const it of data.answers) {
       switch (true) {
@@ -88,7 +88,7 @@ export default class QuestModel {
     return currentBall;
   }
 
-  createBall() {
-    this._ball = this.initBalls(this._state);
+  createPoints() {
+    this._ball = this.initPoints(this._state);
   }
 }
