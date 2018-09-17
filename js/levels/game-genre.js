@@ -71,17 +71,22 @@ export default class GameGenre extends AbstractView {
 
     agreeButton.disabled = true;
 
+    /* переключаю кнопку в вкл или выкл*/
+
     Array.from(this.element.querySelectorAll(`input[type=checkbox]`)).forEach((button) => {
-      button.addEventListener(`change`, () => {
+      button.addEventListener(`change`, (evt) => {
+        evt.preventDefault();
         if (this.element.querySelectorAll(`input[type=checkbox]:checked`).length > 0) {
           agreeButton.disabled = false;
-        } else {
-          agreeButton.disabled = true;
+          return agreeButton.disabled;
         }
+        agreeButton.disabled = true;
+        return agreeButton.disabled;
       });
     });
 
-    agreeButton.addEventListener(`click`, () => {
+    agreeButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
       for (const it of buttons) {
         if (it.className === `track__button track__button--pause`) {
           it.className = `track__button track__button--play`;
@@ -94,6 +99,7 @@ export default class GameGenre extends AbstractView {
 
     buttons.forEach((element) => {
       element.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
         this.onCheckMusic(evt, buttons, tracks);
       });
     });

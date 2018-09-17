@@ -20,7 +20,8 @@ export default class WinResultat extends AbstractView {
 
   bind() {
     const button = this.element.querySelector(`.result__replay`);
-    button.addEventListener(`click`, () => {
+    button.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
       this.onRestart();
     });
   }

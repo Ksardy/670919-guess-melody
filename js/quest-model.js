@@ -35,14 +35,13 @@ export default class QuestModel {
   takeAnswerTrue() {
     if (this._packData[0].type === `genre`) {
       return this._packData[0].genre;
-    } else {
-      for (const it of this._packData[0].answers) {
-        if (it.isCorrect === true) {
-          return it.title.replace(/\s/g, ``);
-        }
-      }
-      return -1;
     }
+    for (const it of this._packData[0].answers) {
+      if (it.isCorrect === true) {
+        return it.title.replace(/\s/g, ``);
+      }
+    }
+    return -1;
   }
 
   isTimeFail() {

@@ -29,7 +29,10 @@ export default class Welcome extends AbstractView {
     agreeButton.disabled = true;
     this.loaded(agreeButton);
 
-    agreeButton.addEventListener(`click`, () => this.onStartGame());
+    agreeButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      this.onStartGame();
+    });
   }
 
 }

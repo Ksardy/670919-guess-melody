@@ -61,9 +61,9 @@ export default class StartGameApplication {
     let questType = sounds[0].type;
     if (questType === `genre`) {
       return data.append(this.updateCreateGenreTemplate(game, data, sounds));
-    } else {
-      return data.append(this.updateCreateArtistTemplate(game, data, sounds));
     }
+    return data.append(this.updateCreateArtistTemplate(game, data, sounds));
+
   }
 
   /* для проигрывания музыки в жанре*/

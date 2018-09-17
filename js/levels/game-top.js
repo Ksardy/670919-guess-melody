@@ -35,7 +35,8 @@ export default class Header extends AbstractView {
 
   bind() {
     const welcomeButton = this.element.querySelector(`.game__back`);
-    welcomeButton.addEventListener(`click`, () => {
+    welcomeButton.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
       this.onRestart();
     });
   }
