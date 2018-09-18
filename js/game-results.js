@@ -25,7 +25,7 @@ export default class ResultatApplication {
     return selectSlide(resultat.element);
   }
 
-  createResults(data, object) {
+  createResults(answers, object) {
     let player = object.state;
     if (player.time === 0) {
       return {title: `Увы и ах!`,
@@ -38,7 +38,7 @@ export default class ResultatApplication {
       };
     }
     const playerBall = object.playerBall;
-    const allPlayerPoints = data.map((element) => element.points);
+    const allPlayerPoints = answers.map((element) => element.points);
     allPlayerPoints.sort((a, b) => b - a);
     let position = allPlayerPoints.indexOf(playerBall) + 1;
     let otherPlayer = allPlayerPoints.length - position;
