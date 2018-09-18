@@ -50,14 +50,13 @@ export default class GameArtist extends AbstractView {
   bind() {
     const track = this.element.querySelector(`audio`);
     const buttonTrack = this.element.querySelector(`.track__button`);
-    const artistButtons = this.element.querySelectorAll(`.artist__input`);
 
     buttonTrack.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       this.onCheckMusic(evt, track);
     });
 
-    artistButtons.forEach((button) => {
+    Array.from(this.element.querySelectorAll(`.artist__input`)).forEach((button) => {
       button.addEventListener(`click`, (evt) => {
         evt.preventDefault();
         track.pause();

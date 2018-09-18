@@ -76,11 +76,7 @@ export default class GameGenre extends AbstractView {
     Array.from(this.element.querySelectorAll(`input[type=checkbox]`)).forEach((button) => {
       button.addEventListener(`change`, (evt) => {
         evt.preventDefault();
-        if (this.element.querySelectorAll(`input[type=checkbox]:checked`).length > 0) {
-          agreeButton.disabled = false;
-          return agreeButton.disabled;
-        }
-        agreeButton.disabled = true;
+        agreeButton.disabled = this.element.querySelectorAll(`input[type=checkbox]:checked`).length <= 0;
         return agreeButton.disabled;
       });
     });
